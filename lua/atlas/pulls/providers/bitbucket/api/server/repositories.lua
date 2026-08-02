@@ -297,10 +297,8 @@ function M.delete_branch(repo, branch, on_done)
 		return nil
 	end
 
-	local url = service.server_url(
-		"/rest/branch-utils/1.0",
-		string.format("/projects/%s/repos/%s/branches", owner, repo_name)
-	)
+	local url =
+		service.server_url("/rest/branch-utils/1.0", string.format("/projects/%s/repos/%s/branches", owner, repo_name))
 	local ref = branch_name:sub(1, 5) == "refs/" and branch_name or ("refs/heads/" .. branch_name)
 	local body = vim.json.encode({ name = ref, dryRun = false })
 	return service.request("DELETE", url, nil, body, function(_, err)
